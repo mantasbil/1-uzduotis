@@ -8,7 +8,8 @@
 #include <list>
 #include <algorithm>
 #include "studentas.h"
+#include "write_to_file.h"
+#include "sort.h"
 
-void create_file(int kiekis);
-void write(std::vector<Studentas>& v, std::string file_name);
-void test(int kiekis);
+void list_test(int kiekis);
+void vector_test(int kiekis);

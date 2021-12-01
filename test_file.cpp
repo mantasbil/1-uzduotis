@@ -1,6 +1,4 @@
 #include "test_file.h"
-#include "rand_int.h"
-#include<sstream>;
 
 using std::cout;
 using std::left;
@@ -16,47 +14,67 @@ using std::ifstream;
 using std::vector;
 using std::list;
 
-void create_file(int kiekis)
-{
-    std::random_device rd;
-    std::mt19937 mt(rd());
-    std::uniform_real_distribution<double> dist(1., 10.);
-    double galutinis_random;
 
-    string file_name = "Studentai" + to_string(kiekis) + ".txt";
-    ofstream outfile(file_name);
-    outfile << left << setw(20) << "Vardas" << left << setw(20) << "Pavarde" << left << setw(15) << "Galutinis" << endl;
-    for (int i = 1; i <= kiekis; i++)
-    {
-        galutinis_random = dist(mt);
-        outfile << left << setw(20) << "Vardas" + to_string(i)
-            << left << setw(20) << "Pavarde" + to_string(i)
-            << left << setw(20) << fixed << setprecision(2) << galutinis_random << endl;
+void list_test(int kiekis)
+{
+    int strat;
+    cout << endl;
+    cout << "List strukturos rezultatai:" << endl;
+    auto start1 = std::chrono::high_resolution_clock::now();
+    studentas temp;
+    list<studentas> studentai;
+    list<studentas>::iterator it;
+    it = studentai.begin();
+    string eil;
+    string file_name1, file_name2;
+    int VargsiukuKiekis = 0, GalvociuKiekis = 0;
+    ifstream openf("Studentai" + to_string(kiekis) + ".txt");
+    try {
+        if (openf.fail()) throw std::runtime_error("Nepavyko atidaryti failo");
     }
+    catch (std::runtime_error& e) {
+        std::cout << e.what();
+        exit(1);
+    }
+    getline(openf, eil);
+    for (int i = 0; i < kiekis; i++)
+    {
+        
+        openf >> temp.vardas >> temp.pavarde >> temp.galutinis_vid;
+        studentai.push_back(temp);
+    }   
+    openf.close();
+    auto end1 = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> diff1 = end1 - start1;
+    cout << "Failo su " << kiekis << " studentu nuskaitymas uztruko " << diff1.count() << " s" << endl;
+
+    cout << "Pasirinkite dalijimo strategija: 1 arba 2 ";
+    cin >> strat;
+    do {
+        try {
+            if (strat != 1 && strat != 2) throw std::runtime_error("Neatpazinta komanda");
+        }
+        catch (std::runtime_error& e) {
+            cout << e.what() << endl;
+            cin.clear();
+            cout << "Bandykite is naujo ";
+            cin >> strat;
+        }
+    } while (strat != 1 && strat != 2);
+    if (strat == 1) list_dalijimas_1(studentai);
+    if (strat == 2) list_dalijimas_2(studentai);
 }
 
-void write(vector<Studentas>& v, string file_name)
-{
-    ofstream outfile(file_name);
-    outfile << left << setw(20) << "Vardas" << left << setw(20) << "Pavarde" << left << setw(15) << "Galutinis" << endl;
-    for (Studentas s : v)
-    {
-        outfile << left << setw(20) << s.getVardas()
-            << left << setw(20) << s.getPavarde()
-            << left << setw(15) << s.getGalutinis() << endl;
-    }
-}
 
-void test(int kiekis)
+void vector_test(int kiekis)
 {
     int strat;
     cout << endl;
     cout << "Vector strukturos rezultatai:" << endl;
     auto start1 = std::chrono::high_resolution_clock::now();
-    Studentas temp;
-    vector<Studentas> studentai;
-    string vard, pav;
-    double gal;
+
+    vector<studentas> studentai;
+    
     studentai.resize(kiekis);
     string eil;
     ifstream openf("Studentai" + to_string(kiekis) + ".txt");
@@ -67,39 +85,31 @@ void test(int kiekis)
         std::cout << e.what();
         exit(1);
     }
-    std::stringstream buff;
-    buff << openf.rdbuf();
-    openf.close();
-    getline(buff, eil);
+    getline(openf, eil);
     for (auto& i : studentai)
     {
-        i.readStudent(buff);
+        openf >> i.vardas >> i.pavarde >> i.galutinis_vid;
     }
-    //openf.close();
+    openf.close();
     auto end1 = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff1 = end1 - start1;
     cout << "Failo su " << kiekis << " studentu nuskaitymas uztruko " << diff1.count() << " s" << endl;
 
-    vector<Studentas> vargsiukai;
-    //vargsiukai.reserve(0.6 * kiekis);
-    std::sort(studentai.begin(), studentai.end(), compare_mark);
-    auto start2 = std::chrono::high_resolution_clock::now();
-    vector<Studentas>::iterator it = std::find_if(studentai.begin(), studentai.end(), islaike);
-    vargsiukai = vector<Studentas>(studentai.begin(), it);
-    vargsiukai.shrink_to_fit();
-    vector<Studentas>::iterator it1 = studentai.begin();
-    studentai.erase(studentai.begin(), it);
-    auto end2 = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> diff2 = end2 - start2;
-    cout << kiekis << " studentu suskirstymas i uztruko " << diff2.count() << " s" << endl;
-
-    string vargsiukai_file_name = "Vargsiukai" + to_string(kiekis) + ".txt";
-    write(vargsiukai, vargsiukai_file_name);
-    vargsiukai.clear();
-
-    string galvociai_file_name = "Galvociai" + to_string(kiekis) + ".txt";
-    write(studentai, galvociai_file_name);
-    studentai.clear();
+    cout << "Pasirinkite dalijimo strategija: 1 arba 2 ";
+    cin >> strat;
+    do {
+        try {
+            if (strat != 1 && strat != 2) throw std::runtime_error("Neatpazinta komanda");
+        }
+        catch (std::runtime_error& e) {
+            cout << e.what() << endl;
+            cin.clear();
+            cout << "Bandykite is naujo ";
+            cin >> strat;
+        }
+    } while (strat != 1 && strat != 2);
+    if (strat == 1) vector_dalijimas_1(studentai);
+    if (strat == 2) vector_dalijimas_2(studentai);
 
 }
 

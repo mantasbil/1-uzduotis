@@ -40,13 +40,13 @@ void vector_dalijimas_1(std::vector<studentas>& studentai)
     std::chrono::duration<double> diff2 = end2 - start2;
     cout << kiek << " studentu suskirstymas i dvi grupes 1-a strategija uztruko " << diff2.count() << " s" << endl;
 
-    string vargsiukai_file_name = "Vargsiukai" + to_string(kiek) + "_vect.txt";
+    /*string vargsiukai_file_name = "Vargsiukai" + to_string(kiek) + "_vect.txt";
     vector_write(vargsiukai, vargsiukai_file_name);
     vargsiukai.clear();
 
     string galvociai_file_name = "Galvociai" + to_string(kiek) + "_vect.txt";
     vector_write(galvociai, galvociai_file_name);
-    galvociai.clear();
+    galvociai.clear();*/
 }
 
 void vector_dalijimas_2(std::vector<studentas>& studentai)
@@ -64,13 +64,13 @@ void vector_dalijimas_2(std::vector<studentas>& studentai)
     std::chrono::duration<double> diff2 = end2 - start2;
     cout << kiekis << " studentu suskirstymas i dvi grupes 2-a strategija uztruko " << diff2.count() << " s" << endl;
 
-    string vargsiukai_file_name = "Vargsiukai" + to_string(kiekis) + "_vect.txt";
+    /*string vargsiukai_file_name = "Vargsiukai" + to_string(kiekis) + "_vect.txt";
     vector_write(vargsiukai, vargsiukai_file_name);
     vargsiukai.clear();
 
     string galvociai_file_name = "Galvociai" + to_string(kiekis) + "_vect.txt";
     vector_write(studentai, galvociai_file_name);
-    studentai.clear();
+    studentai.clear();*/
 }
 void list_dalijimas_1(std::list<studentas>& studentai)
 {
@@ -94,12 +94,12 @@ void list_dalijimas_1(std::list<studentas>& studentai)
     std::chrono::duration<double> diff2 = end2 - start2;
     cout << kiekis << " studentu suskirstymas i dvi grupes 1-a strategija uztruko " << diff2.count() << " s" << endl;
 
-    string vargsiukai_file_name = "Vargsiukai" + to_string(kiekis) + "_list.txt";
+    /*string vargsiukai_file_name = "Vargsiukai" + to_string(kiekis) + "_list.txt";
     list_write(vargsiukai, vargsiukai_file_name);
     vargsiukai.clear();
     string galvociai_file_name = "Galvociai" + to_string(kiekis) + "_list.txt";
     list_write(galvociai, galvociai_file_name);
-    galvociai.clear();
+    galvociai.clear();*/
 }
 
 void list_dalijimas_2(std::list<studentas>& studentai)
@@ -115,10 +115,10 @@ void list_dalijimas_2(std::list<studentas>& studentai)
     std::chrono::duration<double> diff2 = end2 - start2;
     cout << kiekis << " studentu suskirstymas i dvi grupes 2-a strategija uztruko " << diff2.count() << " s" << endl;
 
-    string vargsiukai_file_name = "Vargsiukai" + to_string(kiekis) + "_list.txt";
+    /*string vargsiukai_file_name = "Vargsiukai" + to_string(kiekis) + "_list.txt";
     list_write(vargsiukai, vargsiukai_file_name);
     vargsiukai.clear();
     string galvociai_file_name = "Galvociai" + to_string(kiekis) + "_list.txt";
     list_write(studentai, galvociai_file_name);
-    studentai.clear();
+    studentai.clear();*/
 }
